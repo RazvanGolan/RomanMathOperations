@@ -1,4 +1,3 @@
-using RomanMathOperations.Models;
 using RomanMathOperations.Services;
 
 namespace RomanMathOperations.Operations;
@@ -53,7 +52,7 @@ public class RomanOperations(IRomanService romanService) : IRomanOperations
 
         if (string.IsNullOrEmpty(expanded1))
         {
-            throw new Exception("The result is 0, but romans did not have a concept for that");
+            throw new InvalidOperationException("The result is 0, but romans did not have a concept for that");
         }
         
         return romanService.OptimizeNumber(expanded1);

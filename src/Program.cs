@@ -3,8 +3,8 @@ using RomanMathOperations.Operations;
 using RomanMathOperations.Services;
 
 var serviceProvider = new ServiceCollection()
-    .AddSingleton<IRomanService, RomanService>()
-    .AddSingleton<IRomanOperations, RomanOperations>()
+    .AddScoped<IRomanService, RomanService>()
+    .AddScoped<IRomanOperations, RomanOperations>()
     .BuildServiceProvider();
 
 var romanOperations = serviceProvider.GetRequiredService<IRomanOperations>();
