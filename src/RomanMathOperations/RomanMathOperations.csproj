@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="Operations.cs" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     </ItemGroup>
 
 </Project>

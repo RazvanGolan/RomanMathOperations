@@ -1,8 +1,17 @@
-﻿using RomanMathOperations.Operations;
+﻿using Microsoft.Extensions.DependencyInjection;
+using RomanMathOperations.Operations;
+using RomanMathOperations.Services;
 
-var one = "III";
-var two = "I";
+var serviceProvider = new ServiceCollection()
+    .AddSingleton<IRomanService, RomanService>()
+    .AddSingleton<IRomanOperations, RomanOperations>()
+    .BuildServiceProvider();
 
-var result = RomanOperations.Addition(one, two);
+var romanOperations = serviceProvider.GetRequiredService<IRomanOperations>();
+
+const string one = "XIX";
+const string two = "V";
+
+var result = romanOperations.Add(one, two);
 
 Console.WriteLine(result);
