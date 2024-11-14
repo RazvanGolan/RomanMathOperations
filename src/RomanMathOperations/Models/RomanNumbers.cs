@@ -14,6 +14,7 @@ public static class RomanNumbers
 
     public static readonly List<(string From, string To)> Optimizations =
     [
+        // Groups of five
         ("IIIII", "V"),
         ("VVVVV", "XXV"),
         ("XXXXX", "L"),
@@ -33,5 +34,15 @@ public static class RomanNumbers
         ("XXXX", "XL"),
         ("DCCCC", "CM"),
         ("CCCC", "CD")
+    ];
+    
+    public static readonly List<(string From, string To)> Decompozitions =
+    [
+        ("V", "IIIII"),
+        ("X", "VV"),
+        ("L", "XXXXX"),
+        ("C", "LL"),
+        ("D", "CCCCC"),
+        ("M", "DD")
     ];
 }

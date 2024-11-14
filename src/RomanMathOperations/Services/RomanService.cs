@@ -6,7 +6,7 @@ public class RomanService : IRomanService
 {
     public string ExpandNumber(string roman)
     {
-        string expanded = roman;
+        var expanded = roman;
         foreach (var expansion in RomanNumbers.Expansions)
         {
             expanded = expanded.Replace(expansion.Key, expansion.Value);
@@ -16,19 +16,7 @@ public class RomanService : IRomanService
 
     public string OptimizeNumber(string roman)
     {
-        // First sort the characters by their value
-        var sorted = new string(roman.OrderByDescending(c => 
-            c switch
-            {
-                'M' => 7,
-                'D' => 6,
-                'C' => 5,
-                'L' => 4,
-                'X' => 3,
-                'V' => 2,
-                'I' => 1,
-                _ => 0
-            }).ToArray());
+        var sorted = OrderRoman(roman);
 
         string previous;
         do
@@ -41,5 +29,33 @@ public class RomanService : IRomanService
         } while (previous != sorted);
 
         return sorted;
+    }
+
+    public string DecomposeNumber(string roman)
+    {
+        var sorted = OrderRoman(roman);
+        
+        foreach (var (from, to) in RomanNumbers.Decompozitions)
+        {
+            sorted = sorted.Replace(from, to);
+        }
+
+        return sorted;
+    }
+
+    private static string OrderRoman(string roman)
+    {
+        return new string(roman.OrderByDescending(c => 
+            c switch
+            {
+                'M' => 7,
+                'D' => 6,
+                'C' => 5,
+                'L' => 4,
+                'X' => 3,
+                'V' => 2,
+                'I' => 1,
+                _ => throw new ArgumentException($"The number {roman} contains an invalid roman character {c}")
+            }).ToArray());
     }
 }

@@ -9,9 +9,14 @@ var serviceProvider = new ServiceCollection()
 
 var romanOperations = serviceProvider.GetRequiredService<IRomanOperations>();
 
-const string one = "XIX";
-const string two = "V";
+const string one = "MCCCLXXVII"; // 1377
+const string two = "MXCII"; // 1092
 
-var result = romanOperations.Add(one, two);
+// const string one = "IX"; // 1377
+// const string two = "I"; // 1092
 
-Console.WriteLine(result);
+var addition = romanOperations.Add(one, two);
+var subtraction = romanOperations.Subtract(one, two);
+
+Console.WriteLine(addition);
+Console.WriteLine(subtraction);
