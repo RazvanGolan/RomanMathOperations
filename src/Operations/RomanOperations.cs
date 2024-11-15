@@ -57,4 +57,29 @@ public class RomanOperations(IRomanService romanService) : IRomanOperations
         
         return romanService.OptimizeNumber(expanded1);
     }
+
+    public string Multiply(string first, string second)
+    {
+        var result = first;
+
+        if (second.Equals("I"))
+        {
+            return result;
+        }
+
+        while (!second.Equals("I"))
+        {
+            result = Add(result, first);
+            second = Subtract(second, "I");
+        }
+        
+        var mCount = result.Count(c => c == 'M');
+
+        if (mCount <= 3) return result;
+        
+        result = result.Remove(1, mCount - 1);
+        result = result.Replace("M", $"{mCount}M");
+
+        return result;
+    }
 }

@@ -44,6 +44,18 @@ namespace RomanMathOperations.Tests
         }
         
         [Fact]
+        public void Multiply_GivenRomanNumerals_ReturnsExpectedProduct()
+        {
+            const string first = "X";
+            const string second = "V";
+            const string expectedProduct = "L"; 
+
+            var result = _romanOperations.Multiply(first, second);
+
+            Assert.Equal(expectedProduct, result);
+        }
+        
+        [Fact]
         public void Add_InvalidRomanNumerals_ThrowsArgumentException()
         {
             const string invalidFirst = "ABC";
@@ -78,6 +90,18 @@ namespace RomanMathOperations.Tests
             const string second = "X";
             
             Assert.Throws<InvalidOperationException>(() => _romanOperations.Subtract(first, second));
+        }
+        
+        [Fact]
+        public void Multiply_ByOne_ReturnsSameNumber()
+        {
+            const string first = "X";
+            const string second = "I";
+            const string expectedProduct = "X";
+
+            var result = _romanOperations.Multiply(first, second);
+
+            Assert.Equal(expectedProduct, result);
         }
     }
 }
