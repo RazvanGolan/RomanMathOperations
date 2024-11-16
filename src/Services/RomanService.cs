@@ -1,3 +1,4 @@
+using RomanMathOperations.Exceptions;
 using RomanMathOperations.Models;
 
 namespace RomanMathOperations.Services;
@@ -6,12 +7,19 @@ public class RomanService : IRomanService
 {
     public string ExpandNumber(string roman)
     {
-        var expanded = roman;
-        foreach (var expansion in RomanNumbers.Expansions)
+        IsValidRomanNumber(roman);
+        
+        string previous;
+        do
         {
-            expanded = expanded.Replace(expansion.Key, expansion.Value);
-        }
-        return expanded;
+            previous = roman;
+            foreach (var expansion in RomanNumbers.Expansions)
+            {
+                roman = roman.Replace(expansion.Key, expansion.Value);
+            }
+        } while (previous != roman);
+
+        return roman;
     }
 
     public string OptimizeNumber(string roman)
@@ -55,7 +63,30 @@ public class RomanService : IRomanService
                 'X' => 3,
                 'V' => 2,
                 'I' => 1,
-                _ => throw new ArgumentException($"The number {roman} contains an invalid roman character {c}")
+                _ => throw new InvalidRomanCharacter(roman, c)
             }).ToArray());
+    }
+    
+    public void IsValidRomanNumber(string roman)
+    {
+        if (string.IsNullOrWhiteSpace(roman))
+            throw new ResultIsZeroException();
+
+        const string validCharacters = "IVXLCDM";
+    
+        foreach (var c in roman.ToUpper())
+        {
+            if (!validCharacters.Contains(c))
+            {
+                throw new InvalidRomanCharacter(roman, c);
+            }
+        }
+        
+        const string romanPattern = @"^(?!(.*IIII|.*XXXX|.*CCCC|.*VV|.*LL|.*DD))M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$";;
+
+        if (!System.Text.RegularExpressions.Regex.IsMatch(roman, romanPattern))
+        {
+            throw new InvalidRomanFormat(roman);
+        }
     }
 }

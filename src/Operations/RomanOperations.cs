@@ -1,3 +1,4 @@
+using RomanMathOperations.Exceptions;
 using RomanMathOperations.Services;
 
 namespace RomanMathOperations.Operations;
@@ -28,6 +29,11 @@ public class RomanOperations(IRomanService romanService) : IRomanOperations
             }
             else
             {
+                if (string.IsNullOrEmpty(expanded1))
+                {
+                    throw new InvalidRomanSubtractionException();
+                }
+                
                 // If "first" does not contain the character 'c', decompose it repeatedly until either:
                 // 1. It contains 'c', or
                 // 2. It becomes a string made up entirely of 'I' characters
@@ -45,14 +51,14 @@ public class RomanOperations(IRomanService romanService) : IRomanOperations
                 }
                 else
                 {
-                    throw new ArgumentException("Cannot subtract a larger number from a smaller one");
+                    throw new InvalidRomanSubtractionException();
                 }
             }
         }
 
         if (string.IsNullOrEmpty(expanded1))
         {
-            throw new InvalidOperationException("The result is 0, but romans did not have a concept for that");
+            throw new ResultIsZeroException();
         }
         
         return romanService.OptimizeNumber(expanded1);
@@ -60,6 +66,8 @@ public class RomanOperations(IRomanService romanService) : IRomanOperations
 
     public string Multiply(string first, string second)
     {
+        romanService.IsValidRomanNumber(first);
+        romanService.IsValidRomanNumber(second);
         var result = first;
 
         if (second.Equals("I"))
@@ -77,9 +85,51 @@ public class RomanOperations(IRomanService romanService) : IRomanOperations
 
         if (mCount <= 3) return result;
         
+        // For verifying numbers bigger than 4000
         result = result.Remove(1, mCount - 1);
         result = result.Replace("M", $"{mCount}M");
 
         return result;
+    }
+
+    public (string, string) Divide(string first, string second)
+    {
+        romanService.IsValidRomanNumber(first);
+        romanService.IsValidRomanNumber(second);
+        var quotient = string.Empty;
+        var remainder = string.Empty;
+
+        if (second.Equals("I"))
+        {
+            return (first, remainder);
+        }
+
+        if (first.Equals(second))
+        {
+            return ("I", string.Empty);
+        }
+
+        try
+        {
+            while (true)
+            {
+                first = Subtract(first, second);
+                quotient = string.IsNullOrEmpty(quotient) ? "I" : Add(quotient, "I");
+            }
+        }
+        catch (ResultIsZeroException)
+        {
+            // If there is no remainder
+            quotient = Add(quotient, "I");
+
+            return (quotient, remainder);
+        }
+        catch (InvalidRomanSubtractionException)
+        {
+            // If there is remainder
+            remainder = first;
+
+            return (quotient, remainder);
+        }
     }
 }

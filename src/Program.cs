@@ -9,16 +9,51 @@ var serviceProvider = new ServiceCollection()
 
 var romanOperations = serviceProvider.GetRequiredService<IRomanOperations>();
 
-// const string one = "MCCCLXXVII"; // 1377
-// const string two = "MXCII"; // 1092
+const string one = "III";
+const string two = "M";
 
-const string one = "CC"; // 1377
-const string two = "X"; // 1092
+Console.WriteLine($"First number: {one}");
+Console.WriteLine($"Second number: {two}");
+Console.WriteLine();
 
-var addition = romanOperations.Add(one, two);
-var subtraction = romanOperations.Subtract(one, two);
-var multiplication = romanOperations.Multiply(one, two);
+try
+{
+    var addition = romanOperations.Add(one, two);
+    Console.WriteLine($"Addition of {one} and {two}: {addition}");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Failed to add {one} and {two}: {ex.Message}");
+}
 
-Console.WriteLine(addition);
-Console.WriteLine(subtraction);
-Console.WriteLine(multiplication);
+try
+{
+    var subtraction = romanOperations.Subtract(one, two);
+    Console.WriteLine($"Subtraction of {two} from {one}: {subtraction}");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Failed to subtract {two} from {one}: {ex.Message}");
+}
+
+try
+{
+    var multiplication = romanOperations.Multiply(one, two);
+    Console.WriteLine($"Multiplication of {one} and {two}: {multiplication}");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Failed to multiply {one} and {two}: {ex.Message}");
+}
+
+try
+{
+    var (quotient, remainder) = romanOperations.Divide(one, two);
+    Console.WriteLine($"Division of {one} by {two}:");
+    Console.WriteLine($" - Quotient: {quotient}");
+    Console.WriteLine($" - Remainder: {remainder}");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Failed to divide {one} by {two}: {ex.Message}");
+}

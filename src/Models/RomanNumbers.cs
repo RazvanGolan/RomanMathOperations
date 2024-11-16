@@ -14,20 +14,16 @@ public static class RomanNumbers
 
     public static readonly List<(string From, string To)> Optimizations =
     [
-        // Groups of five
         ("IIIII", "V"),
+        ("VV", "X"),
         ("VVVVV", "XXV"),
         ("XXXXX", "L"),
+        ("LL", "C"),
         ("LLLLL", "CCL"),
         ("CCCCC", "D"),
-        ("DDDDD", "MMD"),
-
-        // Groups of two
-        ("VV", "X"),
-        ("LL", "C"),
         ("DD", "M"),
-
-        // Subtractive combinations
+        ("DDDDD", "MMD"),
+        
         ("VIIII", "IX"),
         ("IIII", "IV"),
         ("LXXXX", "XC"),

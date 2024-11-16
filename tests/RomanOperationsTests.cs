@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using RomanMathOperations.Exceptions;
 using RomanMathOperations.Operations;
 using RomanMathOperations.Services;
 
@@ -6,7 +7,7 @@ namespace RomanMathOperations.Tests
 {
     public class RomanOperationsTests
     {
-        private readonly IRomanOperations _romanOperations;
+        protected readonly IRomanOperations RomanOperations;
 
         public RomanOperationsTests()
         {
@@ -15,93 +16,31 @@ namespace RomanMathOperations.Tests
                 .AddScoped<IRomanOperations, RomanOperations>()
                 .BuildServiceProvider();
 
-            _romanOperations = serviceProvider.GetService<IRomanOperations>()!;
-        }
-
-        [Fact]
-        public void Add_GivenRomanNumerals_ReturnsExpectedSum()
-        {
-            const string first = "X";
-            const string second = "V";
-            const string expectedSum = "XV";
-            
-            var result = _romanOperations.Add(first, second);
-            
-            Assert.Equal(expectedSum, result);
+            RomanOperations = serviceProvider.GetService<IRomanOperations>()!;
         }
         
-        [Fact]
-        public void Subtract_GivenRomanNumerals_ReturnsExpectedDifference()
+        [Theory]
+        [InlineData("ABC", "V")]
+        [InlineData("X", "DEF")]
+        [InlineData("XYZ", "DEF")]
+        public void Operations_InvalidRomanCharacters_ThrowsInvalidRomanCharacter(string first, string second)
         {
-            const string first = "X";
-            const string second = "V";
-            const string expectedSum = "V";
-            
-            var result = _romanOperations.Subtract(first, second);
-            
-            Assert.Equal(expectedSum, result);
-
+            Assert.Throws<InvalidRomanCharacter>(() => RomanOperations.Add(first, second));
+            Assert.Throws<InvalidRomanCharacter>(() => RomanOperations.Subtract(first, second));
+            Assert.Throws<InvalidRomanCharacter>(() => RomanOperations.Multiply(first, second));
+            Assert.Throws<InvalidRomanCharacter>(() => RomanOperations.Divide(first, second));
         }
         
-        [Fact]
-        public void Multiply_GivenRomanNumerals_ReturnsExpectedProduct()
+        [Theory]
+        [InlineData("XXXX", "V")]
+        [InlineData("X", "VVVV")]
+        [InlineData("XXXX", "VVVV")]
+        public void Operations_InvalidRomanFormat_ThrowsInvalidRomanFormat(string first, string second)
         {
-            const string first = "X";
-            const string second = "V";
-            const string expectedProduct = "L"; 
-
-            var result = _romanOperations.Multiply(first, second);
-
-            Assert.Equal(expectedProduct, result);
-        }
-        
-        [Fact]
-        public void Add_InvalidRomanNumerals_ThrowsArgumentException()
-        {
-            const string invalidFirst = "ABC";
-            const string validSecond = "V";
-            
-            Assert.Throws<ArgumentException>(() => _romanOperations.Add(invalidFirst, validSecond));
-        }
-        
-        [Fact]
-        public void Subtract_InvalidRomanNumerals_ThrowsArgumentException()
-        {
-            const string invalidFirst = "ABC";
-            const string validSecond = "V";
-            
-            
-            Assert.Throws<ArgumentException>(() => _romanOperations.Subtract(invalidFirst, validSecond));
-        }
-        
-        [Fact]
-        public void Subtract_LargerRomanNumeralFromSmaller_ThrowsArgumentException()
-        {
-            const string smaller = "V";
-            const string larger = "X";
-            
-            Assert.Throws<ArgumentException>(() => _romanOperations.Subtract(smaller, larger));
-        }
-
-        [Fact]
-        public void Subtract_TwoEqualNumbers_ThrowsException()
-        {
-            const string first = "X";
-            const string second = "X";
-            
-            Assert.Throws<InvalidOperationException>(() => _romanOperations.Subtract(first, second));
-        }
-        
-        [Fact]
-        public void Multiply_ByOne_ReturnsSameNumber()
-        {
-            const string first = "X";
-            const string second = "I";
-            const string expectedProduct = "X";
-
-            var result = _romanOperations.Multiply(first, second);
-
-            Assert.Equal(expectedProduct, result);
+            Assert.Throws<InvalidRomanFormat>(() => RomanOperations.Add(first, second));
+            Assert.Throws<InvalidRomanFormat>(() => RomanOperations.Subtract(first, second));
+            Assert.Throws<InvalidRomanFormat>(() => RomanOperations.Multiply(first, second));
+            Assert.Throws<InvalidRomanFormat>(() => RomanOperations.Divide(first, second));
         }
     }
 }
