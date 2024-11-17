@@ -13,7 +13,7 @@ This is a C# project implementing arithmetic operations for Roman numerals **wit
 - **Arithmetic Operations**:
     - **Addition**: Combines two Roman numerals into their sum.
     - **Subtraction**: Computes the difference between two Roman numerals.
-    - **Multiplication**: Multiply two Roman numerals. For results exceeding 4,000, a special representation is used where multiple `M` characters are replaced with a numerical value followed by `M` (e.g., `MMMM` becomes `4M`)..
+    - **Multiplication**: Multiply two Roman numerals. For results exceeding 4,000, a special representation is used where multiple `M` characters are replaced with a numerical value followed by `M` (e.g., `MMMM` becomes `4M`).
     - **Division**: Divides one Roman numeral by another and provides both the quotient and remainder.
 
 - **Validation**:
