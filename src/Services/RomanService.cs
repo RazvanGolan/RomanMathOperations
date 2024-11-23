@@ -82,7 +82,7 @@ public class RomanService : IRomanService
             }
         }
         
-        const string romanPattern = @"^(?!(.*IIII|.*XXXX|.*CCCC|.*VV|.*LL|.*DD))M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$";;
+        const string romanPattern = @"^(?!(.*IIII|.*XXXX|.*CCCC|.*VV|.*LL|.*DD))(M+)?(CM|CD|D?C{0,3})?(XC|XL|L?X{0,3})?(IX|IV|V?I{0,3})?$";
 
         if (!System.Text.RegularExpressions.Regex.IsMatch(roman, romanPattern))
         {

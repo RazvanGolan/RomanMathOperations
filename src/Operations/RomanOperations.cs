@@ -80,14 +80,6 @@ public class RomanOperations(IRomanService romanService) : IRomanOperations
             result = Add(result, first);
             second = Subtract(second, "I");
         }
-        
-        var mCount = result.Count(c => c == 'M');
-
-        if (mCount <= 3) return result;
-        
-        // For verifying numbers bigger than 4000
-        result = result.Remove(1, mCount - 1);
-        result = result.Replace("M", $"{mCount}M");
 
         return result;
     }

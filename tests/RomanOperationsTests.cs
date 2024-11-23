@@ -8,15 +8,18 @@ namespace RomanMathOperations.Tests
     public class RomanOperationsTests
     {
         protected readonly IRomanOperations RomanOperations;
+        protected readonly IRomanConverter RomanConverter;
 
         public RomanOperationsTests()
         {
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<IRomanService, RomanService>()
                 .AddScoped<IRomanOperations, RomanOperations>()
+                .AddScoped<IRomanConverter, RomanConverter>()
                 .BuildServiceProvider();
 
-            RomanOperations = serviceProvider.GetService<IRomanOperations>()!;
+            RomanOperations = serviceProvider.GetRequiredService<IRomanOperations>();
+            RomanConverter = serviceProvider.GetRequiredService<IRomanConverter>();
         }
         
         [Theory]

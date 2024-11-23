@@ -5,13 +5,20 @@ public class RomanOperationsMultiplyTests : RomanOperationsTests
     [Fact]
     public void Multiply_GivenRomanNumerals_ReturnsExpectedProduct()
     {
-        const string first = "X";
-        const string second = "V";
-        const string expectedProduct = "L"; 
+        var random = new Random();
 
-        var result = RomanOperations.Multiply(first, second);
+        for (var i = 1; i <= 20; i++)
+        {
+            var num1 = random.Next(1, 3999);
+            var num2 = random.Next(1, 3999);
 
-        Assert.Equal(expectedProduct, result);
+            var roman1 = RomanConverter.ConvertDecimalToRoman(num1);
+            var roman2 = RomanConverter.ConvertDecimalToRoman(num2);
+
+            var romanProduct = RomanOperations.Multiply(roman1, roman2);
+            var product = RomanConverter.ConvertRomanToDecimal(romanProduct);
+            Assert.Equal(num1 * num2, product);
+        }
     }
     
     [Fact]

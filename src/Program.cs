@@ -5,6 +5,7 @@ using RomanMathOperations.Services;
 var serviceProvider = new ServiceCollection()
     .AddScoped<IRomanService, RomanService>()
     .AddScoped<IRomanOperations, RomanOperations>()
+    .AddScoped<IRomanConverter, RomanConverter>()
     .BuildServiceProvider();
 
 var romanOperations = serviceProvider.GetRequiredService<IRomanOperations>();

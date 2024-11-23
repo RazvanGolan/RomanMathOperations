@@ -13,8 +13,12 @@ This is a C# project implementing arithmetic operations for Roman numerals **wit
 - **Arithmetic Operations**:
     - **Addition**: Combines two Roman numerals into their sum.
     - **Subtraction**: Computes the difference between two Roman numerals.
-    - **Multiplication**: Multiply two Roman numerals. For results exceeding 4,000, a special representation is used where multiple `M` characters are replaced with a numerical value followed by `M` (e.g., `MMMM` becomes `4M`).
+    - **Multiplication**: Multiply two Roman numerals.
     - **Division**: Divides one Roman numeral by another and provides both the quotient and remainder.
+
+- **Converter**:
+  - **ConvertRomanToDecimal**: Converts a Roman numeral string into its decimal (integer) equivalent.
+  - **ConvertDecimalToRoman**: Converts a decimal number into its Roman numeral representation, supporting values greater than 4000 by repeating the character `M`.
 
 - **Validation**:
   - Detects invalid characters in Roman numerals (valid characters are `I`, `V`, `X`, `L`, `C`, `D`, `M`).
@@ -32,7 +36,7 @@ This is a C# project implementing arithmetic operations for Roman numerals **wit
 - Arithmetic operations (addition, subtraction, multiplication, and division).
 - Validation of invalid characters and formats.
 - Exception handling for invalid operations.
-
+- Randomly generated test cases to ensure correct results for various operations and conversions between Roman numerals and decimal numbers.
 
 ## License
 
